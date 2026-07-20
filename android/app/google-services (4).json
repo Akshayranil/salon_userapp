@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "568144474994",
+    "project_id": "salon-app-adabc",
+    "storage_bucket": "salon-app-adabc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568144474994:android:cd53ffe39f48c19001a3eb",
+        "android_client_info": {
+          "package_name": "com.akshay.salon_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlVaT8YSPEpCUKCvmir6KJA_TLijj-D8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
