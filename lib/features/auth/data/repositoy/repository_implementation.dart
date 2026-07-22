@@ -1,4 +1,5 @@
 import 'package:salon_app/features/auth/data/datasource/auth_datasource.dart';
+import 'package:salon_app/features/auth/data/model/user_model.dart';
 import 'package:salon_app/features/auth/domain/entity/user_entity.dart';
 import 'package:salon_app/features/auth/domain/repository/auth_repository.dart';
 
@@ -14,7 +15,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> signup(String email, String password) {
+  Future<UserEntity> signup(String email, String password) {
     return remote.signup(email, password);
   }
 
@@ -29,8 +30,35 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<UserEntity> googleLogin() async {
+  Future<UserModel> googleLogin() async {
   final model = await remote.googleLogin();
   return model; // model extends UserEntity
+}
+
+ @override
+  Future<void> saveProfile({
+    required String uid,
+    required String name,
+    required String phone,
+    required String place,
+    required String image,
+  }) {
+    return remote.saveProfile(
+      uid: uid,
+      name: name,
+      phone: phone,
+      place: place,
+      image: image,
+    );
+  }
+
+   @override
+  Future<UserEntity> getProfile(String uid) async {
+    final model = await remote.getProfile(uid);
+    return model;
+  }
+  @override
+Future<String> uploadProfileImage(String filePath) {
+  return remote.uploadProfileImage(filePath);
 }
 }

@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore: ^6.7.1
   google_sign_in: ^6.1.5
   sign_in_button: ^3.0.0
+  image_picker: ^1.2.1
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:

@@ -9,6 +9,7 @@ import 'package:salon_app/features/auth/presentation/widgets/email_field.dart';
 import 'package:salon_app/features/auth/presentation/widgets/google_authentication.dart';
 import 'package:salon_app/features/auth/presentation/widgets/password_login.dart';
 import 'package:salon_app/features/auth/presentation/widgets/reset_field.dart';
+import 'package:salon_app/features/profile/presentation/ui/profile_setupscreen.dart';
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailcontroller = TextEditingController();
@@ -167,13 +168,21 @@ class LoginScreen extends StatelessWidget {
       // First time → go to ProfileSetup
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => CustomNavigationbar()),
+        MaterialPageRoute(builder: (_) => ProfileSetupScreen(uid: state.user.uid)),
       );
     }
   } else if (state is AuthFailure) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(state.error)),
       
+    );
+  } else if (state is AuthProfileSaved) {
+     Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CustomNavigationbar(),
+      ),
+      (route) => false,
     );
   }
 }
