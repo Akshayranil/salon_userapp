@@ -11,11 +11,13 @@ class AuthInitial extends AuthState {}
 class AuthLoading extends AuthState {}
 
 class AuthSuccess extends AuthState {
-  final User user; // add the user
-  AuthSuccess(this.user);
+  final UserEntity user;
+  final bool hasProfile;
+
+  AuthSuccess(this.user, this.hasProfile);
 
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [user, hasProfile];
 }
 
 
@@ -26,3 +28,5 @@ class AuthFailure extends AuthState {
  
   List<Object?> get props => [error];
 }
+
+class AuthSignedUp extends AuthState {}
