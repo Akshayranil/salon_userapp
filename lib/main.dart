@@ -8,6 +8,10 @@ import 'package:salon_app/features/auth/data/repositoy/repository_implementation
 import 'package:salon_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:salon_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:salon_app/features/auth/presentation/ui/screen_login.dart';
+import 'package:salon_app/features/home/data/datasource/serviceuser_datasource.dart';
+import 'package:salon_app/features/home/data/repository/serviceuser_repoimplementation.dart';
+import 'package:salon_app/features/home/domain/usecase/serviceuser_usecase.dart';
+import 'package:salon_app/features/home/presentation/bloc/service_user_bloc.dart';
 import 'package:salon_app/features/profile/data/datasource/profile_datasorceimplementation.dart';
 import 'package:salon_app/features/profile/data/datasource/profile_datasource.dart';
 import 'package:salon_app/features/profile/data/repository/profile_repositoryimpl.dart';
@@ -29,20 +33,45 @@ void main() async {
   );
   final profilerepository = ProfileRepositoryImpl(remote: profileDataSource);
   final profileusecase = ProfileUseCases(repository: profilerepository);
-  runApp(MyApp(useCases: useCases,profileusecase: profileusecase,));
+
+  //servics and staffs
+  final serviceRemote = ServiceUserRemoteDataSource(firestore);
+
+  final serviceRepo = ServiceUserRepositoryImpl(serviceRemote);
+
+  final getServices = GetServices(serviceRepo);
+  final getStaffByService = GetStaffByService(serviceRepo);
+  runApp(
+    MyApp(
+      useCases: useCases,
+      profileusecase: profileusecase,
+      getServices: getServices,
+      getStaffByService: getStaffByService,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   final AuthUseCases useCases;
   final ProfileUseCases profileusecase;
-  const MyApp({super.key, required this.useCases,required this.profileusecase});
+  final GetServices getServices;
+  final GetStaffByService getStaffByService;
+  const MyApp({
+    super.key,
+    required this.useCases,
+    required this.profileusecase,
+    required this.getServices,
+    required this.getStaffByService,
+  });
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<AuthBloc>(create: (_) => AuthBloc(useCases)),
-      BlocProvider<ProfileBloc>(create: (_)=>ProfileBloc(profileusecase))
+      providers: [
+        BlocProvider<AuthBloc>(create: (_) => AuthBloc(useCases)),
+        BlocProvider<ProfileBloc>(create: (_) => ProfileBloc(profileusecase)),
+        BlocProvider<ServiceUserBloc>(create: (_)=>ServiceUserBloc(getServices, getStaffByService)..add(LoadServicesEvent())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
