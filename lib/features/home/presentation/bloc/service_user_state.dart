@@ -15,3 +15,8 @@ class StaffLoaded extends ServiceUserState {
   final List<StaffEntity> staff;
   StaffLoaded(this.staff);
 }
+
+class ServiceError extends ServiceUserState {
+  final String message;
+  ServiceError(this.message);
+}

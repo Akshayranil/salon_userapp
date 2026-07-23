@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(create: (_) => AuthBloc(useCases)),
         BlocProvider<ProfileBloc>(create: (_) => ProfileBloc(profileusecase)),
-        BlocProvider<ServiceUserBloc>(create: (_)=>ServiceUserBloc(getServices, getStaffByService)..add(LoadServicesEvent())),
+        BlocProvider<ServiceUserBloc>(create: (_)=>ServiceUserBloc(getServices, getStaffByService)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

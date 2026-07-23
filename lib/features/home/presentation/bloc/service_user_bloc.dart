@@ -13,11 +13,16 @@ class ServiceUserBloc extends Bloc<ServiceUserEvent, ServiceUserState> {
 
   ServiceUserBloc(this.getServices, this.getStaff)
       : super(ServiceInitial()) {
-    on<LoadServicesEvent>((event, emit) async {
-      emit(ServiceLoading());
-      final data = await getServices();
-      emit(ServicesLoaded(data));
-    });
+   on<LoadServicesEvent>((event, emit) async {
+  emit(ServiceLoading());
+  try {
+    final data = await getServices();
+    emit(ServicesLoaded(data));
+    print("SERVICES: $data");
+  } catch (e) {
+    emit(ServiceError(e.toString())); // ✅
+  }
+});
 
     on<LoadStaffByServiceEvent>((event, emit) async {
       emit(ServiceLoading());

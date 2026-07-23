@@ -8,12 +8,12 @@ class ServiceModel extends ServiceEntity {
     required super.image,
   });
 
-  factory ServiceModel.fromJson(Map<String, dynamic> json) {
+  factory ServiceModel.fromJson(Map<String, dynamic> json,String id) {
     return ServiceModel(
-      id: json['id'],
-      name: json['name'],
+      id: id,
+      name: json['name']??"Leonel Messi",
       price: (json['price'] as num).toDouble(),
-      image: json['image'],
+      image: json['image']??"Not found",
     );
   }
 }

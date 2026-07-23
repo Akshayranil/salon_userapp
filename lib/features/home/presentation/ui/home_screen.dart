@@ -8,8 +8,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-
+    context.read<ServiceUserBloc>().add(LoadServicesEvent());
     return Scaffold(
       appBar: AppBar(title: Text("Services")),
 
@@ -18,7 +17,9 @@ class HomeScreen extends StatelessWidget {
           if (state is ServiceLoading) {
             return Center(child: CircularProgressIndicator());
           }
-
+          if (state is ServiceError) {
+            return Center(child: Text(state.message));
+          }
           if (state is ServicesLoaded) {
             return GridView.builder(
               padding: EdgeInsets.all(10),
@@ -43,9 +44,9 @@ class HomeScreen extends StatelessWidget {
                   child: Card(
                     child: Column(
                       children: [
-                        Expanded(
-                          child: Image.network(service.image, fit: BoxFit.cover),
-                        ),
+                        // Expanded(
+                        //   child: Image.network(service.image, fit: BoxFit.cover),
+                        // ),
                         Text(service.name),
                       ],
                     ),

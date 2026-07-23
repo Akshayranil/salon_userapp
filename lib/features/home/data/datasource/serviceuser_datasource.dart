@@ -10,7 +10,7 @@ class ServiceUserRemoteDataSource {
   Future<List<ServiceModel>> getServices() async {
     final snapshot = await firestore.collection("services").get();
     return snapshot.docs
-        .map((e) => ServiceModel.fromJson(e.data()))
+        .map((e) => ServiceModel.fromJson(e.data(),e.id))
         .toList();
   }
 
@@ -18,7 +18,7 @@ class ServiceUserRemoteDataSource {
     final snapshot = await firestore.collection("staff").get();
 
     return snapshot.docs
-        .map((e) => StaffModel.fromJson(e.data()))
+        .map((e) => StaffModel.fromJson(e.data(),e.id))
         .where((staff) => staff.serviceIds.contains(serviceId))
         .toList();
   }

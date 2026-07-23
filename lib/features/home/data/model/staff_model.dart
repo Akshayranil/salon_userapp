@@ -8,9 +8,9 @@ class StaffModel extends StaffEntity {
     required super.serviceIds,
   });
 
-  factory StaffModel.fromJson(Map<String, dynamic> json) {
+  factory StaffModel.fromJson(Map<String, dynamic> json,String id) {
     return StaffModel(
-      id: json['id'],
+      id: id,
       name: json['name'],
       image: json['image'],
       serviceIds: List<String>.from(json['serviceIds']),
