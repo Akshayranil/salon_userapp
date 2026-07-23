@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salon_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:salon_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:salon_app/features/profile/presentation/ui/profile_setupscreen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -10,22 +13,16 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Profile"), centerTitle: true),
 
-      body: BlocBuilder<AuthBloc, AuthState>(
+      body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          if (state is AuthSuccess) {
-  final user = state.user;
-
-  return Center(
-    child: Text("Logged in as ${user.email}"),
-  );
-}
+          
           // 🔄 LOADING
-          if (state is AuthLoading) {
+          if (state is ProfileLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
           // ❌ ERROR
-          if (state is AuthFailure) {
+          if (state is ProfileFailure) {
             return Center(child: Text(state.error));
           }
 
@@ -45,6 +42,7 @@ class ProfileScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         if (imageUrl.isNotEmpty) {
+                          
                           showDialog(
                             context: context,
                             builder: (_) => Dialog(
@@ -68,7 +66,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 20),
 
                     TextFormField(
                       initialValue: name,
@@ -101,17 +99,69 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     const Divider(),
 
                     ListTile(
                       leading: const Icon(Icons.edit),
                       title: const Text("Edit Profile"),
                       onTap: () {
-                        // Navigator.pushNamed(context, "/profileSetup");
+                        final uid = FirebaseAuth.instance.currentUser!.uid;
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ProfileSetupScreen(uid: uid)));
                       },
                     ),
 
+                    const Divider(),
+                     ListTile(
+                      leading: const Icon(
+                        Icons.privacy_tip_outlined,
+                        
+                      ),
+                      title: const Text('Privacy Policy'),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                      onTap: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => PrivacyPolicyScreen(),
+                        //   ),
+                        // );
+                      },
+                    ),
+                    const Divider(),
+                    ListTile(
+                      leading: const Icon(
+                        Icons.article_outlined,
+                        
+                      ),
+                      title: const Text('Terms & Conditions'),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                      onTap: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => TermsAndConditionsScreen(),
+                        //   ),
+                        // );
+                      },
+                    ),
+                    const Divider(),
+                    ListTile(
+                      leading: const Icon(
+                        Icons.help_outline,
+                        
+                      ),
+                      title: const Text('Help & Support'),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                      onTap: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => HelpSupportScreen(),
+                        //   ),
+                        // );
+                      },
+                    ),
                     const Divider(),
 
                     ListTile(

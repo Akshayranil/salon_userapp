@@ -31,30 +31,8 @@ class AuthFailure extends AuthState {
 
 class AuthSignedUp extends AuthState {}
 
-class AuthProfileSaved extends AuthState {}
 
-class ImageUploadedState extends AuthState {
-  final String imageUrl;
 
-  ImageUploadedState(this.imageUrl);
 
-  @override
-  List<Object?> get props => [imageUrl];
-}
 
-class ProfileLoaded extends AuthState {
-  final String name;
-  final String phone;
-  final String place;
-  final String image;
 
-  ProfileLoaded({
-    required this.name,
-    required this.phone,
-    required this.place,
-    required this.image,
-  });
-
-  @override
-  List<Object?> get props => [name, phone, place, image];
-}

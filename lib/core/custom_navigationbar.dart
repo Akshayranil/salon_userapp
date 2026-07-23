@@ -5,6 +5,7 @@ import 'package:salon_app/features/bookings/presentation/ui/bookings_screen.dart
 import 'package:salon_app/features/favorite/presentation/ui/favorites_screen.dart';
 import 'package:salon_app/features/home/presentation/ui/home_screen.dart';
 import 'package:salon_app/features/profile/presentation/ui/profile_screen.dart';
+import 'package:salon_app/features/profile/presentation/ui/profile_view.dart';
 
 class CustomNavigationbar extends StatelessWidget {
   final int? tabindex;
@@ -36,7 +37,7 @@ class CustomNavigationbar extends StatelessWidget {
             HomeScreen(),
             BookingsScreen(),
             FavoritesScreen(),
-            ProfileScreen(),
+            ProfileView()
           ],
         ),
       ),

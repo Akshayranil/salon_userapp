@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salon_app/core/constant_colors.dart';
@@ -9,7 +8,9 @@ import 'package:salon_app/features/auth/presentation/widgets/email_field.dart';
 import 'package:salon_app/features/auth/presentation/widgets/google_authentication.dart';
 import 'package:salon_app/features/auth/presentation/widgets/password_login.dart';
 import 'package:salon_app/features/auth/presentation/widgets/reset_field.dart';
+import 'package:salon_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:salon_app/features/profile/presentation/ui/profile_setupscreen.dart';
+
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailcontroller = TextEditingController();
@@ -57,17 +58,14 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  EmailLoginField(emailcontroller: emailcontroller,),
+                  EmailLoginField(emailcontroller: emailcontroller),
                   SizedBox(height: 30),
-                  
-                PasswordLoginField(passwordcontroller: passwordcontroller,),
 
+                  PasswordLoginField(passwordcontroller: passwordcontroller),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                     ResetPasswordField()
-                    ],
+                    children: [ResetPasswordField()],
                   ),
 
                   if (state is AuthLoading)
@@ -149,47 +147,45 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
 
-                  GoogleAuthentication()
+                  GoogleAuthentication(),
                 ],
               ),
             ),
           );
         },
         listener: (context, state) async {
-  if (state is AuthSuccess) {
- if (state.hasProfile) {
-      // Already setup → go to HomeScreen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => CustomNavigationbar()), 
-      );
-    }
-     else {
-      // First time → go to ProfileSetup
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => ProfileSetupScreen(uid: state.user.uid)),
-      );
-    }
-  } else if (state is AuthFailure) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(state.error)),
-      
-    );
-  } else if (state is AuthProfileSaved) {
-     Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (_) => CustomNavigationbar(),
+          if (state is AuthSuccess) {
+            if (state.hasProfile) {
+              // Already setup → go to HomeScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => CustomNavigationbar()),
+              );
+            } else {
+              // First time → go to ProfileSetup
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ProfileSetupScreen(uid: state.user.uid),
+                ),
+              );
+            }
+          } else if (state is AuthFailure) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.error)));
+          }
+          // } else if (state is ProfileSaved) {
+          //    Navigator.pushAndRemoveUntil(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (_) => CustomNavigationbar(),
+          //     ),
+          //     (route) => false,
+          //   );
+          // }
+        },
       ),
-      (route) => false,
     );
   }
-}
-
-      ),
-    );
-  }
-
-
 }

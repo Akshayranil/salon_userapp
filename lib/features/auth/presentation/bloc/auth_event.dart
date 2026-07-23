@@ -20,26 +20,7 @@ class AuthLogout extends AuthEvent {}
 
 class GoogleLogin extends AuthEvent {}
 
-class SaveProfileEvent extends AuthEvent {
-  final String uid;
-  final String name;
-  final String phone;
-  final String place;
-  final String image;
 
-  SaveProfileEvent({
-    required this.uid,
-    required this.name,
-    required this.phone,
-    required this.place,
-    required this.image,
-  });
-}
 
-class UploadProfileImageEvent extends AuthEvent {
-  final String filePath;
 
-  UploadProfileImageEvent(this.filePath);
-}
 
-class GetProfileEvent extends AuthEvent {}

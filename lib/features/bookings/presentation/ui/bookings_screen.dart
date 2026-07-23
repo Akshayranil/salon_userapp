@@ -5,8 +5,10 @@ class BookingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Profile screen"),
+    return  Scaffold(
+      body: Center(
+        child: Text("Profile screen"),
+      ),
     );
   }
 }

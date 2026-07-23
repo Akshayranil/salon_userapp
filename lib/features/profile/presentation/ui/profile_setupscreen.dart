@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:salon_app/core/constant_colors.dart';
+import 'package:salon_app/core/custom_navigationbar.dart';
 
 import 'package:salon_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:salon_app/features/home/presentation/ui/home_screen.dart';
+import 'package:salon_app/features/profile/presentation/bloc/profile_bloc.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
   // 🔥 MODIFIED (Stateless → Stateful)
@@ -36,7 +38,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
       });
 
       // 🔥 CALL BLOC → UPLOAD IMAGE
-      context.read<AuthBloc>().add(UploadProfileImageEvent(picked.path));
+      context.read<ProfileBloc>().add(UploadProfileImageEvent(picked.path));
     }
   }
 
@@ -45,7 +47,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     return Scaffold(
       appBar: AppBar(title: Text("Setup Profile"), centerTitle: true),
 
-      body: BlocConsumer<AuthBloc, AuthState>(
+      body: BlocConsumer<ProfileBloc, ProfileState>(
         // 🔥 MODIFIED
         listener: (context, state) {
           // ✅ IMAGE UPLOADED → STORE URL
@@ -58,10 +60,10 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
           }
 
           // ✅ PROFILE SAVED → GO HOME
-          if (state is AuthProfileSaved) {
+          if (state is ProfileSaved) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(builder: (context) => CustomNavigationbar()),
             );
           }
         },
@@ -121,12 +123,12 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
                     SizedBox(height: 50),
 
-                    if (state is AuthLoading)
+                    if (state is ProfileLoading)
                       CircularProgressIndicator()
                     else
                       ElevatedButton(
                         onPressed: () {
-                          context.read<AuthBloc>().add(
+                          context.read<ProfileBloc>().add(
                             SaveProfileEvent(
                               uid: widget.uid,
                               name: nameController.text.trim(),

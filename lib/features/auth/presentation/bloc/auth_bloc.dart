@@ -17,9 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignUp>(onSignup);
     on<AuthLogout>(onLogout);
     on<GoogleLogin>(onGoogleLogin); 
-    on<SaveProfileEvent>(onSaveProfile);
-    on<UploadProfileImageEvent>(onUploadImage);
-    on<GetProfileEvent>(onGetProfile);
+    
   }
 
  Future<void> onLogin(AuthLogin event, Emitter<AuthState> emit) async {
@@ -66,59 +64,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 }
 
-Future<void> onSaveProfile(
-  SaveProfileEvent event,
-  Emitter<AuthState> emit,
-) async {
-  emit(AuthLoading());
-  try {
-    await useCases.saveProfile(
-      uid: event.uid,
-      name: event.name,
-      phone: event.phone,
-      place: event.place,
-      image: event.image,
-    );
 
-    emit(AuthProfileSaved());
-  } catch (e) {
-    emit(AuthFailure(e.toString()));
-  }
-}
-
-Future<void> onUploadImage(
-  UploadProfileImageEvent event,
-  Emitter<AuthState> emit,
-) async {
-  emit(AuthLoading());
-  try {
-    final imageUrl =
-        await useCases.uploadProfileImage(event.filePath);
-
-    emit(ImageUploadedState(imageUrl));
-  } catch (e) {
-    emit(AuthFailure(e.toString()));
-  }
-}
-
-Future<void> onGetProfile(
-  GetProfileEvent event,
-  Emitter<AuthState> emit,
-) async {
-  emit(AuthLoading());
-  try {
-    final uid = FirebaseAuth.instance.currentUser!.uid; // 🔥 GET UID HERE
-
-    final data = await useCases.getProfile(uid);
-
-    emit(ProfileLoaded(
-      name: data.name ?? '',
-      phone: data.phone ?? '',
-      place: data.place ?? '',
-      image: data.image ?? '',
-    ));
-  } catch (e) {
-    emit(AuthFailure(e.toString()));
-  }
-}
 }

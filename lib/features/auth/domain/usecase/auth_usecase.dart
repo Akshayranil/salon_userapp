@@ -26,27 +26,5 @@ class AuthUseCases {
     return repository.googleLogin();
   }
 
-  Future<void> saveProfile({
-    required String uid,
-    required String name,
-    required String phone,
-    required String place,
-    required String image,
-  }) {
-    return repository.saveProfile(
-      uid: uid,
-      name: name,
-      phone: phone,
-      place: place,
-      image: image,
-    );
-  }
-
-   Future<UserEntity> getProfile(String uid) {
-    return repository.getProfile(uid);
-  }
-
-  Future<String> uploadProfileImage(String filePath) {
-  return repository.uploadProfileImage(filePath);
-}
+  
 }

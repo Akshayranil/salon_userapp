@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salon_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:salon_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:salon_app/features/profile/presentation/ui/profile_screen.dart';
 
 class ProfileView extends StatelessWidget {
@@ -10,7 +11,7 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
 
    WidgetsBinding.instance.addPostFrameCallback((_) {
-  context.read<AuthBloc>().add(GetProfileEvent());
+  context.read<ProfileBloc>().add(GetProfileEvent());
 });
 
     return const ProfileScreen();

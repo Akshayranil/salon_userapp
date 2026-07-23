@@ -6,13 +6,5 @@ abstract class AuthRemoteDataSource {
   Future<void> logout();
   Future<bool> hasProfile(String uid);
   Future<UserModel> googleLogin();
-  Future<void> saveProfile({
-    required String uid,
-    required String name,
-    required String phone,
-    required String place,
-    required String image,
-  });
-  Future<UserModel> getProfile(String uid);
-  Future<String> uploadProfileImage(String filePath);
+  
 }
