@@ -8,6 +8,10 @@ import 'package:salon_app/features/auth/data/repositoy/repository_implementation
 import 'package:salon_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:salon_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:salon_app/features/auth/presentation/ui/screen_login.dart';
+import 'package:salon_app/features/bookings/data/datasource/booking_datasource.dart';
+import 'package:salon_app/features/bookings/data/repository/booking_repoimplementation.dart';
+import 'package:salon_app/features/bookings/domain/usecase/booking_usecase.dart';
+import 'package:salon_app/features/bookings/presentation/bloc/booking_bloc.dart';
 import 'package:salon_app/features/home/data/datasource/serviceuser_datasource.dart';
 import 'package:salon_app/features/home/data/repository/serviceuser_repoimplementation.dart';
 import 'package:salon_app/features/home/domain/usecase/serviceuser_usecase.dart';
@@ -41,12 +45,18 @@ void main() async {
 
   final getServices = GetServices(serviceRepo);
   final getStaffByService = GetStaffByService(serviceRepo);
+
+  //booking
+  final bookingRemote = BookingRemoteDataSource(firestore);
+  final bookingRepo = BookingRepositoryImpl(bookingRemote);
+  final bookingusecase = CreateBooking(bookingRepo);
   runApp(
     MyApp(
       useCases: useCases,
       profileusecase: profileusecase,
       getServices: getServices,
       getStaffByService: getStaffByService,
+      bookingusecase: bookingusecase,
     ),
   );
 }
@@ -56,12 +66,14 @@ class MyApp extends StatelessWidget {
   final ProfileUseCases profileusecase;
   final GetServices getServices;
   final GetStaffByService getStaffByService;
+  final CreateBooking bookingusecase;
   const MyApp({
     super.key,
     required this.useCases,
     required this.profileusecase,
     required this.getServices,
     required this.getStaffByService,
+    required this.bookingusecase,
   });
 
   // This widget is the root of your application.
@@ -71,7 +83,10 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(create: (_) => AuthBloc(useCases)),
         BlocProvider<ProfileBloc>(create: (_) => ProfileBloc(profileusecase)),
-        BlocProvider<ServiceUserBloc>(create: (_)=>ServiceUserBloc(getServices, getStaffByService)),
+        BlocProvider<ServiceUserBloc>(
+          create: (_) => ServiceUserBloc(getServices, getStaffByService),
+        ),
+        BlocProvider<BookingBloc>(create: (_)=>BookingBloc(bookingusecase)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
