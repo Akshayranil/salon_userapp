@@ -13,7 +13,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Create Account",style: TextStyle(fontSize: 36,fontWeight: FontWeight.bold),),centerTitle: true,),
+      appBar: AppBar(title: Text("Create Account",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: AppColor.secondary,),),centerTitle: true,backgroundColor: AppColor.primary,iconTheme: IconThemeData(color: AppColor.secondary),),
       body: BlocConsumer<AuthBloc, AuthState>(
         builder: (context, state) {
           return SingleChildScrollView(
@@ -23,8 +23,8 @@ class SignUpScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 42),
-                    child: Text('Unlock exclusive stays and deals.',style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: AppColor.primary ), )),
+                    padding: EdgeInsets.only(top: 112),
+                    child: Text('Create Your Style Journey',style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: AppColor.primary ), )),
                   Padding(
                     padding: EdgeInsets.all(20),
                     child: Text('Sign up now!',style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: AppColor.primary),)),

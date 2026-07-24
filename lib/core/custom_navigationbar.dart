@@ -35,7 +35,7 @@ class CustomNavigationbar extends StatelessWidget {
         body: TabBarView(
           children: [
             HomeScreen(),
-            BookingsScreen(),
+            BookingScreen(),
             FavoritesScreen(),
             ProfileView()
           ],

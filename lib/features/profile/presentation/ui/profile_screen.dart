@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salon_app/core/constant_colors.dart';
 import 'package:salon_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:salon_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:salon_app/features/profile/presentation/ui/profile_setupscreen.dart';
@@ -11,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Profile"), centerTitle: true),
+      appBar: AppBar(title: Text("Profile",style: TextStyle(color: AppColor.secondary),),centerTitle: true,backgroundColor: AppColor.primary,iconTheme: IconThemeData(color: AppColor.secondary)),
 
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {

@@ -8,6 +8,12 @@ class BookingLoading extends BookingState {}
 
 class BookingSuccess extends BookingState {}
 
+class BookingLoaded extends BookingState {
+  final List<BookingEntity> bookings;
+
+  BookingLoaded(this.bookings);
+}
+
 class BookingFailure extends BookingState {
   final String error;
 

@@ -7,3 +7,9 @@ class CreateBookingEvent extends BookingEvent {
 
   CreateBookingEvent(this.booking);
 }
+
+class GetUserBookingsEvent extends BookingEvent {
+  final String userId;
+
+  GetUserBookingsEvent(this.userId);
+}

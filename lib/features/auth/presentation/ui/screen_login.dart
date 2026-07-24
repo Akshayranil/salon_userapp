@@ -21,13 +21,13 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Login ',
-          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Login ',
+      //     style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+      //   ),
+      //   centerTitle: true,
+      // ),
       body: BlocConsumer<AuthBloc, AuthState>(
         builder: (context, state) {
           return SingleChildScrollView(
@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: 80),
                     child: Text(
-                      'Plan. Book. Relax. ',
+                      'Find. Book. Style ',
                       style: TextStyle(
                         fontSize: 38,
                         fontWeight: FontWeight.bold,

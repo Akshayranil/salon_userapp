@@ -1,0 +1,37 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "salon-app-adabc",
+          "appId": "1:568144474994:android:cd53ffe39f48c19001a3eb",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "salon-app-adabc",
+          "configurations": {
+            "android": "1:568144474994:android:cd53ffe39f48c19001a3eb",
+            "ios": "1:568144474994:ios:ba37ca371481ed1401a3eb",
+            "web": "1:568144474994:web:3aa1e8bf0c2cbac201a3eb"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salon_app/features/auth/data/datasource/auth_datasource_implementation.dart';
@@ -8,10 +9,12 @@ import 'package:salon_app/features/auth/data/repositoy/repository_implementation
 import 'package:salon_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:salon_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:salon_app/features/auth/presentation/ui/screen_login.dart';
+import 'package:salon_app/features/auth/presentation/ui/splash_screen.dart';
 import 'package:salon_app/features/bookings/data/datasource/booking_datasource.dart';
 import 'package:salon_app/features/bookings/data/repository/booking_repoimplementation.dart';
 import 'package:salon_app/features/bookings/domain/usecase/booking_usecase.dart';
 import 'package:salon_app/features/bookings/presentation/bloc/booking_bloc.dart';
+import 'package:salon_app/features/bookings/presentation/widgets/fcm_services.dart';
 import 'package:salon_app/features/home/data/datasource/serviceuser_datasource.dart';
 import 'package:salon_app/features/home/data/repository/serviceuser_repoimplementation.dart';
 import 'package:salon_app/features/home/domain/usecase/serviceuser_usecase.dart';
@@ -21,10 +24,20 @@ import 'package:salon_app/features/profile/data/datasource/profile_datasource.da
 import 'package:salon_app/features/profile/data/repository/profile_repositoryimpl.dart';
 import 'package:salon_app/features/profile/domain/usecase/profile_usecase.dart';
 import 'package:salon_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:salon_app/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
+//FCM
+  await FirebaseMessaging.instance.requestPermission();
+
+await FCMService.saveToken();
+FirebaseMessaging.onMessage.listen((message) {
+  print("Notification: ${message.notification?.title}");
+});
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 
@@ -49,7 +62,7 @@ void main() async {
   //booking
   final bookingRemote = BookingRemoteDataSource(firestore);
   final bookingRepo = BookingRepositoryImpl(bookingRemote);
-  final bookingusecase = CreateBooking(bookingRepo);
+  final bookingusecase = BookingUsecase(bookingRepo);
   runApp(
     MyApp(
       useCases: useCases,
@@ -66,7 +79,7 @@ class MyApp extends StatelessWidget {
   final ProfileUseCases profileusecase;
   final GetServices getServices;
   final GetStaffByService getStaffByService;
-  final CreateBooking bookingusecase;
+  final BookingUsecase bookingusecase;
   const MyApp({
     super.key,
     required this.useCases,
@@ -94,7 +107,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: LoginScreen(),
+        home: SplashScreen(),
       ),
     );
   }

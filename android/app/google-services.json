@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:568144474994:android:cd53ffe39f48c19001a3eb",
+        "mobilesdk_app_id": "1:568144474994:android:4e9523e4cd30679301a3eb",
         "android_client_info": {
-          "package_name": "com.akshay.salon_app"
+          "package_name": "com.akshay.salon_admin"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "568144474994-08o38q0frap59bmim7bt8slbnurmlncv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDlVaT8YSPEpCUKCvmir6KJA_TLijj-D8c"
@@ -20,7 +25,49 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568144474994-08o38q0frap59bmim7bt8slbnurmlncv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568144474994:android:cd53ffe39f48c19001a3eb",
+        "android_client_info": {
+          "package_name": "com.akshay.salon_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568144474994-k8mhj5u8uso1ba54tg6k1ths0c5d03g9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akshay.salon_app",
+            "certificate_hash": "0996042b3608afa5f3318a4b206ba2217f673f9e"
+          }
+        },
+        {
+          "client_id": "568144474994-08o38q0frap59bmim7bt8slbnurmlncv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlVaT8YSPEpCUKCvmir6KJA_TLijj-D8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568144474994-08o38q0frap59bmim7bt8slbnurmlncv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

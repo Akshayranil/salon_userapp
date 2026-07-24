@@ -7,15 +7,24 @@ part 'booking_event.dart';
 part 'booking_state.dart';
 
 class BookingBloc extends Bloc<BookingEvent, BookingState> {
-  final CreateBooking createBooking;
+  final BookingUsecase usecase;
 
-  BookingBloc(this.createBooking) : super(BookingInitial()) {
+  BookingBloc(this.usecase) : super(BookingInitial()) {
     on<CreateBookingEvent>((event, emit) async {
       emit(BookingLoading());
-
       try {
-        await createBooking(event.booking);
+        await usecase.create(event.booking);
         emit(BookingSuccess());
+      } catch (e) {
+        emit(BookingFailure(e.toString()));
+      }
+    });
+
+    on<GetUserBookingsEvent>((event, emit) async {
+      emit(BookingLoading());
+      try {
+        final bookings = await usecase.getUserBookings(event.userId);
+        emit(BookingLoaded(bookings));
       } catch (e) {
         emit(BookingFailure(e.toString()));
       }
