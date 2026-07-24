@@ -15,6 +15,10 @@ import 'package:salon_app/features/bookings/data/repository/booking_repoimplemen
 import 'package:salon_app/features/bookings/domain/usecase/booking_usecase.dart';
 import 'package:salon_app/features/bookings/presentation/bloc/booking_bloc.dart';
 import 'package:salon_app/features/bookings/presentation/widgets/fcm_services.dart';
+import 'package:salon_app/features/favorite/data/datasource/favorite_datasource.dart';
+import 'package:salon_app/features/favorite/data/repository/favorite_repositoryimpl.dart';
+import 'package:salon_app/features/favorite/domain/usecase/favorite_usecase.dart';
+import 'package:salon_app/features/favorite/presentation/bloc/favorites_bloc.dart';
 import 'package:salon_app/features/home/data/datasource/serviceuser_datasource.dart';
 import 'package:salon_app/features/home/data/repository/serviceuser_repoimplementation.dart';
 import 'package:salon_app/features/home/domain/usecase/serviceuser_usecase.dart';
@@ -63,6 +67,14 @@ FirebaseMessaging.onMessage.listen((message) {
   final bookingRemote = BookingRemoteDataSource(firestore);
   final bookingRepo = BookingRepositoryImpl(bookingRemote);
   final bookingusecase = BookingUsecase(bookingRepo);
+
+  // ✅ FAVORITES SETUP
+
+final favoritesRemote = FavoritesRemoteDataSource(firestore);
+
+final favoritesRepo = FavoritesRepositoryImpl(favoritesRemote);
+
+final favoritesUseCase = FavoritesUseCase(favoritesRepo);
   runApp(
     MyApp(
       useCases: useCases,
@@ -70,6 +82,7 @@ FirebaseMessaging.onMessage.listen((message) {
       getServices: getServices,
       getStaffByService: getStaffByService,
       bookingusecase: bookingusecase,
+      favoritesUseCase: favoritesUseCase,
     ),
   );
 }
@@ -80,6 +93,7 @@ class MyApp extends StatelessWidget {
   final GetServices getServices;
   final GetStaffByService getStaffByService;
   final BookingUsecase bookingusecase;
+  final FavoritesUseCase favoritesUseCase;
   const MyApp({
     super.key,
     required this.useCases,
@@ -87,6 +101,7 @@ class MyApp extends StatelessWidget {
     required this.getServices,
     required this.getStaffByService,
     required this.bookingusecase,
+    required this.favoritesUseCase
   });
 
   // This widget is the root of your application.
@@ -100,6 +115,7 @@ class MyApp extends StatelessWidget {
           create: (_) => ServiceUserBloc(getServices, getStaffByService),
         ),
         BlocProvider<BookingBloc>(create: (_)=>BookingBloc(bookingusecase)),
+        BlocProvider<FavoritesBloc>(create: (_)=>FavoritesBloc(favoritesUseCase))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

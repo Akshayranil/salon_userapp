@@ -76,10 +76,12 @@ if (user == null) {
   );
 
   context.read<BookingBloc>().add(CreateBookingEvent(booking));
-
+  context.read<BookingBloc>().add(
+    GetUserBookingsEvent(user.uid),
+  );
   Navigator.pushReplacement(
     context,
-    MaterialPageRoute(builder: (_) => CustomNavigationbar(tabindex: 2,)),
+    MaterialPageRoute(builder: (_) => CustomNavigationbar(tabindex: 1,)),
   );
 }
 
